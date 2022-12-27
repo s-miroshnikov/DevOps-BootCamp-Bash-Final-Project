@@ -41,7 +41,7 @@ print_upload_response() {
 # with this function we check if the each of target files exists and are files and then we call response function
 single_upload() {
   for fileToUpload in "$@"; do
-    filePath=$( echo "${fileToUpload//"~"/"$HOME"}")
+    filePath="${fileToUpload//"~"/"$HOME"}"
     if [ ! -f "${filePath}" ] ;then  
       echo "Error: invalid file path"
       return 1
@@ -63,7 +63,8 @@ print_download_response() {
 
 # with this function we check if the target directory exists, save https://transfer.sh ID and file name and then we call response function  
 single_download() {
-  DownloadfileDir=$(echo "$2" | sed s:"~":"$HOME":g)
+
+  DownloadfileDir="${2/"~"/"$HOME"}"
   if [ ! -e "${DownloadfileDir}" ] ;then  
     echo "Error: invalid path"
     return 1
