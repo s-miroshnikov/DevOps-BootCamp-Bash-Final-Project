@@ -2,7 +2,7 @@
 
 # This script provides functionality to upload files from terminal to https://transfer.sh as well as download from  https://transfer.sh
 
-currentVersion="0.0.1"
+currentVersion="1.23.0"
 # we will use some colors for output
 RED='\e[1;31m'
 GREEN='\e[1;32m'
@@ -66,8 +66,7 @@ single_download() {
 
   DownloadfileDir="${2/"~"/"$HOME"}"
   if [ ! -e "${DownloadfileDir}" ] ;then  
-    echo "Error: invalid path"
-    return 1
+    mkdir "${DownloadfileDir}"
   fi
   DownloadtransferID="$3"
   DownloadfileName="$4"
