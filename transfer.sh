@@ -43,7 +43,7 @@ single_upload() {
   for fileToUpload in "$@"; do
     filePath=$( echo "${fileToUpload//"~"/"$HOME"}")
     if [ ! -f "${filePath}" ] ;then  
-      echo -e "${RED}Error: invalid file path${NC}"
+      echo "Error: invalid file path"
       return 1
     fi
     tempFileName=$(echo "${fileToUpload}" | sed "s/.*\///")
@@ -58,14 +58,14 @@ print_download_response() {
   echo "Downloading ${DownloadfileName}"
   Downloadresponse=$(curl --progress-bar https://transfer.sh/"${DownloadtransferID}/${DownloadfileName}" -o "${DownloadfileDir}"/"${DownloadfileName}") || { echo -e "${RED}Failure!${NC}"; return 1;}
   echo "${Downloadresponse}"
-  echo -e "${GREEN}Success!${NC}"
+  echo "Success!"
 }
 
 # with this function we check if the target directory exists, save https://transfer.sh ID and file name and then we call response function  
 single_download() {
   DownloadfileDir=$(echo "$2" | sed s:"~":"$HOME":g)
   if [ ! -e "${DownloadfileDir}" ] ;then  
-    echo -e "${RED}Error: invalid path${NC}"
+    echo "Error: invalid path"
     return 1
   fi
   DownloadtransferID="$3"
@@ -80,8 +80,8 @@ while getopts "dvh" opt; do
     
     d) single_download "$@" ;;
     h) help ;;
-    v) versioncheck ;;
-    *) echo -e "Please, use proper options, for example ${GREEN}-h${NC} for help."
+    v) version_check ;;
+    *) echo "Please, use proper options, for example -h for help."
     exit 1 ;;
   esac
 done
